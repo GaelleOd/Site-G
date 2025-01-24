@@ -2,6 +2,7 @@ backend:
   name: github
   repo: GaelleOd/Site-G
   branch: main
+
 media_folder: "static/images/uploads"
 public_folder: "/images/uploads"
 
