@@ -1,0 +1,18 @@
+backend:
+  name: git-gateway
+  branch: main  # Remplace "main" par ton branche si nécessaire
+
+media_folder: "assets"  # Emplacement des médias (images, vidéos, etc.)
+public_folder: "/assets"
+
+collections:
+  - name: "produits"
+    label: "Produits"
+    folder: "content/produits"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nom du produit", name: "nom", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Image du produit", name: "image", widget: "image" }
+      - { label: "Prix", name: "prix", widget: "number" }
