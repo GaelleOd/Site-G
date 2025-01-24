@@ -18,3 +18,4 @@ collections:
       - { label: "Prix", name: "price", widget: "number" }
       - { label: "Image", name: "image", widget: "image" }
 
+
