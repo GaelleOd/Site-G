@@ -12,59 +12,66 @@
         <img src="banner.jpg" alt="Bannière de mes créations" class="banner">
         <nav class="fixed-menu">
             <ul class="menu">
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="creations.html">Mes Créations</a></li>
-                <li><a href="about.html">À propos/Évènements</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="panier.html">Mon Panier</a></li>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#produits">Mes Créations</a></li>
+                <li><a href="#about">À propos/Évènements</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Section des produits (dynamique avec Netlify CMS) -->
+    <!-- Section des produits -->
     <main>
-        <section id="best-sellers" class="products">
-            <h2>Nos Best-Sellers</h2>
-            <div class="product-list">
-                <!-- Ici, tu afficheras les produits dynamiquement avec du code, mais pour l'instant on va les mettre statiques -->
-                <div class="product">
-                    <img src="product1.jpg" alt="Produit 1">
-                    <h3>Produit 1</h3>
-                    <p>Broderie délicate sur tissu blanc.</p>
-                    <button>Voir plus</button>
-                </div>
-                <div class="product">
-                    <img src="product2.jpg" alt="Produit 2">
-                    <h3>Produit 2</h3>
-                    <p>Une autre de nos créations favorites.</p>
-                    <button>Voir plus</button>
-                </div>
-                <div class="product">
-                    <img src="product3.jpg" alt="Produit 3">
-                    <h3>Produit 3</h3>
-                    <p>Un classique intemporel.</p>
-                    <button>Voir plus</button>
-                </div>
+        <section id="produits" class="products">
+            <h2>Nos Produits</h2>
+            <div class="product-list" id="product-list">
+                <!-- Les produits seront ajoutés ici par JavaScript -->
             </div>
         </section>
     </main>
-
-    <!-- Section "À propos / Évènements" -->
-    <section id="about" class="about">
-        <h2>À propos</h2>
-        <p>Bienvenue sur ma boutique de créations personnelles ! Chaque article est fabriqué avec soin et passion, à partir de tissu blanc délicatement brodé.</p>
-        
-        <h3>Évènements à venir</h3>
-        <ul>
-            <li><strong>Atelier de broderie :</strong> 5 février 2025</li>
-            <li><strong>Marché artisanal :</strong> 20 mars 2025</li>
-        </ul>
-    </section>
 
     <!-- Bas de page -->
     <footer>
         <p>© 2025 Mes Créations. Tous droits réservés.</p>
     </footer>
+
+    <!-- Script à ajouter avant la balise </body> -->
+    <script>
+        // Lien vers ta feuille Google Sheets
+        const sheetURL = "https://docs.google.com/spreadsheets/d/1w5_3CzRdJTkirl7ztdbXDbr0jYBBaknToD3_HqurRCY/gviz/tq?tqx=out:json";
+
+        async function fetchProducts() {
+            try {
+                const response = await fetch(sheetURL);
+                const data = await response.text();
+                const json = JSON.parse(data.substr(47).slice(0, -2));
+                const rows = json.table.rows;
+
+                const productList = document.getElementById("product-list");
+                rows.forEach(row => {
+                    const [title, description, price, stock, image] = row.c;
+                    const productHTML = `
+                        <div class="product">
+                            <img src="${image?.v || 'default.jpg'}" alt="${title?.v || 'Produit'}">
+                            <h3>${title?.v || 'Titre inconnu'}</h3>
+                            <p>${description?.v || 'Description non disponible'}</p>
+                            <p><strong>Prix :</strong> ${price?.v || 'Non précisé'} €</p>
+                            <p><strong>Stock :</strong> ${stock?.v || 'Non spécifié'}</p>
+                        </div>
+                    `;
+                    productList.innerHTML += productHTML;
+                });
+            } catch (error) {
+                console.error("Erreur lors de la récupération des produits :", error);
+                document.getElementById("product-list").innerHTML = 
+                    "<p>Erreur lors du chargement des produits. Veuillez réessayer plus tard.</p>";
+            }
+        }
+
+        // Charger les produits au chargement de la page
+        fetchProducts();
+    </script>
 </body>
 </html>
+
 
