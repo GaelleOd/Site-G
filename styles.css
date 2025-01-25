@@ -91,6 +91,7 @@ nav .menu li a {
     height: 0; /* Initialement, la hauteur est 0 pour cacher le contenu */
     overflow: hidden; /* Empêche le débordement du contenu invisible */
     transition: height 0.5s ease-out; /* Transition douce pour la hauteur */
+    padding: 0 20px; /* Ajouter un peu de padding pour l'animation */
 }
 
 /* Lorsqu'on clique sur la sous-section, on ouvre la section des produits */
