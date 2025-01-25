@@ -1,12 +1,18 @@
-body {
-    font-family: Arial, sans-serif;
+/* Reset de base */
+* {
     margin: 0;
     padding: 0;
-    background-color: #fff;
-    color: #333;
-    text-align: center;
+    box-sizing: border-box;
 }
 
+/* Style global du body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+/* En-tête et menu fixe */
 header {
     position: relative;
     background-color: #f8f8f8;
@@ -46,6 +52,7 @@ nav .menu li a {
     font-weight: bold;
 }
 
+/* Sous-sections */
 .subsection-container {
     display: flex;
     justify-content: center;
@@ -60,9 +67,8 @@ nav .menu li a {
     border-radius: 10px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 200px;
-    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .subsection img {
@@ -82,11 +88,20 @@ nav .menu li a {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Section des produits */
 .products-section {
-    display: none;
-    padding: 20px;
+    overflow: hidden;
+    transition: max-height 0.5s ease, height 0.5s ease;
+    max-height: 0;
+    height: 0;
 }
 
+.products-section.open {
+    max-height: 1000px;
+    height: auto;
+}
+
+/* Liste des produits */
 .product-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -102,7 +117,6 @@ nav .menu li a {
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
-    overflow: hidden;
 }
 
 .product img {
@@ -132,27 +146,12 @@ nav .menu li a {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Pied de page */
 footer {
     background-color: #f8f8f8;
-    padding: 10px;
+    padding: 20px;
     border-top: 1px solid #ddd;
     font-size: 0.9em;
-}
-
-footer p {
-    margin: 0;
-}
-
-/* Assurer que le contenu de la page se déploie correctement sans être recouvert */
-main {
-    padding-bottom: 100px; /* Laisser de l'espace pour le footer */
-}
-
-#about, footer {
-    text-align: center;
-    padding: 20px;
-}
-
-#about h2, footer p {
-    margin: 0;
+    text-align: center; /* Ajout de cette ligne pour centrer le texte */
+    width: 100%; /* S'assurer que le footer occupe toute la largeur */
 }
