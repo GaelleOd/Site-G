@@ -87,6 +87,19 @@ nav .menu li a {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Section pour afficher les produits (initialement cachée) */
+.products-section {
+    display: none; /* La section est cachée par défaut */
+    max-height: 0; /* Initialement, elle a une hauteur de 0 pour cacher le contenu */
+    overflow: hidden; /* Empêche le débordement du contenu invisible */
+    transition: max-height 0.5s ease-out; /* Transition sur la hauteur */
+}
+
+.products-section.open {
+    display: block; /* Affiche la section quand elle est ouverte */
+    max-height: 1000px; /* Une hauteur suffisamment grande pour contenir tous les produits */
+}
+
 .product-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 5 articles par ligne */
@@ -137,8 +150,4 @@ footer {
     padding: 10px;
     border-top: 1px solid #ddd;
     font-size: 0.9em;
-}
-
-.products-section {
-    display: none; /* La section des produits est cachée par défaut */
 }
