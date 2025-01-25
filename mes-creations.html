@@ -112,20 +112,32 @@
         }
 
         // Ajouter un gestionnaire de clic pour chaque sous-section
-        document.getElementById("subsection1").addEventListener("click", function() {
-            fetchProducts("subsection1"); // Charger les produits de la sous-section 1
-        });
-        document.getElementById("subsection2").addEventListener("click", function() {
-            fetchProducts("subsection2"); // Charger les produits de la sous-section 2
-        });
-        document.getElementById("subsection3").addEventListener("click", function() {
-            fetchProducts("subsection3"); // Charger les produits de la sous-section 3
-        });
-        document.getElementById("subsection4").addEventListener("click", function() {
-            fetchProducts("subsection4"); // Charger les produits de la sous-section 4
-        });
-        document.getElementById("subsection5").addEventListener("click", function() {
-            fetchProducts("subsection5"); // Charger les produits de la sous-section 5
+        const subsections = document.querySelectorAll(".subsection");
+        subsections.forEach(subsection => {
+            subsection.addEventListener("click", function() {
+                const subsectionId = subsection.id;
+                const productsSection = document.getElementById("products-section");
+
+                // Vérifier si les produits sont déjà affichés pour cette sous-section
+                if (productsSection.classList.contains(subsectionId)) {
+                    productsSection.classList.remove(subsectionId);
+                    productsSection.style.maxHeight = "0px"; // Réduire la hauteur
+                } else {
+                    // Fermer tous les autres produits
+                    subsections.forEach(item => {
+                        const otherSection = document.getElementById("products-section");
+                        if (otherSection.classList.contains(item.id)) {
+                            otherSection.classList.remove(item.id);
+                            otherSection.style.maxHeight = "0px"; // Réduire la hauteur
+                        }
+                    });
+
+                    // Ouvrir cette sous-section spécifique
+                    productsSection.classList.add(subsectionId);
+                    productsSection.style.maxHeight = "500px"; // Réouvrir cette sous-section avec animation
+                    fetchProducts(subsectionId);
+                }
+            });
         });
     </script>
 </body>
