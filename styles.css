@@ -1,3 +1,4 @@
+/* Style général du body */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -7,6 +8,7 @@ body {
     text-align: center;
 }
 
+/* Style de l'en-tête */
 header {
     position: relative;
     background-color: #f8f8f8;
@@ -18,6 +20,7 @@ header .banner {
     height: auto;
 }
 
+/* Menu fixe en haut de la page */
 nav.fixed-menu {
     position: fixed;
     top: 0;
@@ -46,11 +49,7 @@ nav .menu li a {
     font-weight: bold;
 }
 
-.products {
-    padding: 80px 20px; /* Ajouter un espace en haut pour éviter la superposition du menu fixe */
-}
-
-/* Sous-sections de la page Mes Créations */
+/* Section pour les sous-sections */
 .subsection-container {
     display: flex;
     justify-content: center;
@@ -59,6 +58,7 @@ nav .menu li a {
     flex-wrap: wrap; /* Pour que les sous-sections passent à la ligne si nécessaire */
 }
 
+/* Style des sous-sections */
 .subsection {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -87,7 +87,7 @@ nav .menu li a {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Section pour afficher les produits (initialement cachée) */
+/* Section pour les produits, cachée au départ */
 .products-section {
     display: block; /* Toujours afficher la section, mais avec la hauteur contrôlée */
     max-height: 0; /* Initialement, la hauteur est 0 pour cacher le contenu */
@@ -95,10 +95,12 @@ nav .menu li a {
     transition: max-height 0.5s ease-out; /* Transition douce pour la hauteur */
 }
 
+/* Lorsqu'on clique sur la sous-section, on ouvre la section des produits */
 .products-section.open {
     max-height: 1000px; /* Grande hauteur pour permettre le déploiement de la section */
 }
 
+/* Grille des produits */
 .product-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 5 articles par ligne */
@@ -106,6 +108,7 @@ nav .menu li a {
     padding: 20px;
 }
 
+/* Style des produits */
 .product {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -144,6 +147,7 @@ nav .menu li a {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Bas de page */
 footer {
     background-color: #f8f8f8;
     padding: 10px;
