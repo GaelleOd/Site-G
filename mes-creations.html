@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Créations</title>
+    <title>Mes Créations - Sous-sections</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -48,45 +48,46 @@
             </div>
         </section>
 
-        <!-- Section pour afficher les produits (elle est cachée) -->
+        <!-- Section pour afficher les produits -->
         <section id="products-section" class="products-section">
-            <!-- Produits de la Sous-section seront chargés ici via JS -->
+            <h2>Produits de la Sous-section</h2>
+            <!-- Les produits s'afficheront ici -->
         </section>
-    </main>
 
-    <!-- Bas de page : À propos et Événements -->
-    <footer id="footer-about">
-        <div class="about-section">
-            <h3>À propos</h3>
+        <section id="about">
+            <h2>À propos</h2>
             <p>Bienvenue sur ma boutique de créations personnelles ! Chaque article est fabriqué avec soin et passion, à partir de tissu blanc délicatement brodé.</p>
-        </div>
-        <div class="events-section">
             <h3>Évènements à venir</h3>
             <ul>
                 <li>Atelier de broderie : 6 février 2025</li>
                 <li>Marché artisanal : 20 mars 2025</li>
             </ul>
-        </div>
-        <p>&copy; 2025 Gaëlle & Amour. Tous droits réservés.</p>
+        </section>
+    </main>
+
+    <!-- Bas de page -->
+    <footer>
+        <p>© 2025 Gaëlle & Amour. Tous droits réservés.</p>
     </footer>
 
     <!-- Script pour récupérer et afficher les produits -->
     <script>
-        const sheetURLs = [
-            "https://docs.google.com/spreadsheets/d/13J4SUfZdUHoedGH_CG5Me-HYfSMk724bKMDom0Y6rNA/gviz/tq?tqx=out:json",
-            "https://docs.google.com/spreadsheets/d/1vQ3XobNvDUthj_8EhAw1fvq9yo6sMTy19zhW01rZCC0/gviz/tq?tqx=out:json",
-            "https://docs.google.com/spreadsheets/d/1qVr3hAHNcYQQdd5juzRKwQrt7GB0CDRuzDl-68psKUw/gviz/tq?tqx=out:json",
-            "https://docs.google.com/spreadsheets/d/1KN266-Hx3NXt3QOss8KHY8c-51HY6Ip58GkbTkfhzxE/gviz/tq?tqx=out:json",
-            "https://docs.google.com/spreadsheets/d/1g259umj-IRj9dhWAgkqj0zOlsOoa0wbSRWtP2wQM2Oo/gviz/tq?tqx=out:json"
-        ];
+        // Liens vers les feuilles Google Sheets des différentes sous-sections
+        const sheetURLs = {
+            subsection1: "https://docs.google.com/spreadsheets/d/13J4SUfZdUHoedGH_CG5Me-HYfSMk724bKMDom0Y6rNA/gviz/tq?tqx=out:json",
+            subsection2: "https://docs.google.com/spreadsheets/d/1vQ3XobNvDUthj_8EhAw1fvq9yo6sMTy19zhW01rZCC0/gviz/tq?tqx=out:json",
+            subsection3: "https://docs.google.com/spreadsheets/d/1qVr3hAHNcYQQdd5juzRKwQrt7GB0CDRuzDl-68psKUw/gviz/tq?tqx=out:json",
+            subsection4: "https://docs.google.com/spreadsheets/d/1KN266-Hx3NXt3QOss8KHY8c-51HY6Ip58GkbTkfhzxE/gviz/tq?tqx=out:json",
+            subsection5: "https://docs.google.com/spreadsheets/d/1g259umj-IRj9dhWAgkqj0zOlsOoa0wbSRWtP2wQM2Oo/gviz/tq?tqx=out:json"
+        };
 
-        // Fonction pour récupérer et afficher les produits depuis Google Sheets
-        async function fetchProducts(url) {
+        // Fonction pour récupérer les produits depuis Google Sheets
+        async function fetchProducts(sheetKey) {
             const productsSection = document.getElementById("products-section");
             productsSection.innerHTML = ''; // Vider la section avant de la remplir avec les nouveaux produits
 
             try {
-                const response = await fetch(url);
+                const response = await fetch(sheetURLs[sheetKey]);
                 const data = await response.text();
                 const json = JSON.parse(data.substr(47).slice(0, -2)); // Extraction des données JSON
                 const rows = json.table.rows;
@@ -116,11 +117,18 @@
         }
 
         // Ajouter un gestionnaire de clic pour chaque sous-section
-        document.querySelectorAll('.subsection').forEach((subsection, index) => {
-            subsection.addEventListener("click", function() {
-                fetchProducts(sheetURLs[index]); // Charger les produits de la sous-section correspondante
+        function addClickListener(subsectionId, sheetKey) {
+            document.getElementById(subsectionId).addEventListener("click", function() {
+                fetchProducts(sheetKey); // Charger les produits lorsque la sous-section est cliquée
             });
-        });
+        }
+
+        // Initialiser les événements de clic pour chaque sous-section
+        addClickListener("subsection1", "subsection1");
+        addClickListener("subsection2", "subsection2");
+        addClickListener("subsection3", "subsection3");
+        addClickListener("subsection4", "subsection4");
+        addClickListener("subsection5", "subsection5");
     </script>
 </body>
 </html>
