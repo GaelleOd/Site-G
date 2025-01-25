@@ -92,9 +92,13 @@
             // Si la section est déjà ouverte, on la referme
             if (productsSection.classList.contains("open")) {
                 productsSection.classList.remove("open");
+                setTimeout(() => {
+                    productsSection.style.maxHeight = "0"; // Réduire la hauteur lors de la fermeture
+                }, 500); // Attendre la fin de la transition avant de réduire la hauteur
             } else {
                 // Sinon, on l'ouvre avec animation
                 productsSection.classList.add("open");
+                productsSection.style.maxHeight = "1000px"; // Augmenter la hauteur lors de l'ouverture
                 fetchProducts(); // Charger les produits quand la section s'ouvre
             }
         });
