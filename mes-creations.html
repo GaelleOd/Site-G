@@ -90,7 +90,7 @@
                 } else {
                     const productListHTML = rows.map(row => {
                         const [title, description, price, stock, image] = row.c;
-                        return `
+                        return 
                             <div class="product">
                                 <img src="${image?.v || 'default.jpg'}" alt="${title?.v || 'Produit'}">
                                 <h3>${title?.v || 'Titre inconnu'}</h3>
@@ -98,9 +98,9 @@
                                 <p><strong>Prix :</strong> ${price?.v || 'Non précisé'} €</p>
                                 <p><strong>Stock :</strong> ${stock?.v || 'Non spécifié'}</p>
                             </div>
-                        `;
+                        ;
                     }).join('');
-                    productsSection.innerHTML = `<div class="product-list">${productListHTML}</div>`;
+                    productsSection.innerHTML = <div class="product-list">${productListHTML}</div>;
                 }
             } catch (error) {
                 console.error("Erreur lors de la récupération des produits :", error);
