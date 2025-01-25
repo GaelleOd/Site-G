@@ -61,11 +61,11 @@
 
     <!-- Script pour gérer l'affichage des produits en fonction de la sous-section -->
     <script>
-        // Lien vers ta feuille Google Sheets
-        const sheetURL = "https://spreadsheets.google.com/feeds/list/2PACX-1vSvtWdoC_e2UFChnySlHabXSnxpC8Qx_2FVMe0uLnc1emOAPxZ6dqJld3m9QBjGiSCe2XTd8ehUCU0v/1604492591/public/values?alt=json";
+        // Lien vers ta feuille Google Sheets (URL corrigée)
+        const sheetURL = "https://spreadsheets.google.com/feeds/list/13J4SUfZdUHoedGH_CG5Me-HYfSMk724bKMDom0Y6rNA/1604492591/public/values?alt=json";
 
         // Fonction pour récupérer les produits depuis Google Sheets
-        async function fetchProducts(subsectionId) {
+        async function fetchProducts() {
             const productsSection = document.getElementById("products-section");
             productsSection.innerHTML = ''; // Vider la section avant de la remplir avec les nouveaux produits
 
@@ -73,29 +73,26 @@
                 const response = await fetch(sheetURL);
                 const data = await response.text();
                 const json = JSON.parse(data.substr(47).slice(0, -2)); // Extraction des données JSON
-                const rows = json.table.rows;
+                const rows = json.feed.entry;
                 
-                // Filtrer les produits en fonction de la sous-section
-                const filteredRows = rows.filter(row => {
-                    // Ici, tu peux ajouter la logique pour filtrer les produits en fonction de la sous-section
-                    // Par exemple, en utilisant une colonne de catégorie ou un identifiant spécifique
-                    // Pour l'instant, on suppose qu'on récupère tous les produits de la feuille.
-                    return true; // A modifier si tu veux une logique spécifique pour chaque sous-section
-                });
-
                 // Ajouter les produits à la section
-                if (filteredRows.length === 0) {
-                    productsSection.innerHTML = "<p>Aucun produit trouvé dans cette sous-section.</p>";
+                if (rows.length === 0) {
+                    productsSection.innerHTML = "<p>Aucun produit trouvé.</p>";
                 } else {
-                    const productListHTML = filteredRows.map(row => {
-                        const [title, description, price, stock, image] = row.c;
+                    const productListHTML = rows.map(row => {
+                        const title = row['gsx$title'] ? row['gsx$title']['$t'] : 'Titre inconnu';
+                        const description = row['gsx$description'] ? row['gsx$description']['$t'] : 'Description non disponible';
+                        const price = row['gsx$price'] ? row['gsx$price']['$t'] : 'Non précisé';
+                        const stock = row['gsx$stock'] ? row['gsx$stock']['$t'] : 'Non spécifié';
+                        const image = row['gsx$image'] ? row['gsx$image']['$t'] : 'default.jpg';
+                        
                         return `
                             <div class="product">
-                                <img src="${image?.v || 'default.jpg'}" alt="${title?.v || 'Produit'}">
-                                <h3>${title?.v || 'Titre inconnu'}</h3>
-                                <p>${description?.v || 'Description non disponible'}</p>
-                                <p><strong>Prix :</strong> ${price?.v || 'Non précisé'} €</p>
-                                <p><strong>Stock :</strong> ${stock?.v || 'Non spécifié'}</p>
+                                <img src="${image}" alt="${title}">
+                                <h3>${title}</h3>
+                                <p>${description}</p>
+                                <p><strong>Prix :</strong> ${price} €</p>
+                                <p><strong>Stock :</strong> ${stock}</p>
                             </div>
                         `;
                     }).join('');
@@ -108,21 +105,11 @@
         }
 
         // Ajouter des gestionnaires de clics sur chaque sous-section
-        document.getElementById("subsection1").addEventListener("click", function() {
-            fetchProducts("subsection1");
-        });
-        document.getElementById("subsection2").addEventListener("click", function() {
-            fetchProducts("subsection2");
-        });
-        document.getElementById("subsection3").addEventListener("click", function() {
-            fetchProducts("subsection3");
-        });
-        document.getElementById("subsection4").addEventListener("click", function() {
-            fetchProducts("subsection4");
-        });
-        document.getElementById("subsection5").addEventListener("click", function() {
-            fetchProducts("subsection5");
-        });
+        document.getElementById("subsection1").addEventListener("click", fetchProducts);
+        document.getElementById("subsection2").addEventListener("click", fetchProducts);
+        document.getElementById("subsection3").addEventListener("click", fetchProducts);
+        document.getElementById("subsection4").addEventListener("click", fetchProducts);
+        document.getElementById("subsection5").addEventListener("click", fetchProducts);
     </script>
 </body>
 </html>
