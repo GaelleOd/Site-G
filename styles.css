@@ -146,38 +146,10 @@ nav .menu li a {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Section "À propos/Évènements" */
-.about {
-    text-align: center; /* Centre tout le texte dans la section */
-    padding: 40px 20px;
-}
-
-.about h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
-.about h3 {
-    font-size: 1.5em;
-    margin-top: 20px;
-}
-
-.about ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-}
-
-.about ul li {
-    font-size: 1.2em;
-    margin: 10px 0;
-}
-
 /* Pied de page */
 footer {
     background-color: #f8f8f8;
     padding: 10px;
     border-top: 1px solid #ddd;
     font-size: 0.9em;
-    text-align: center; /* Centre le texte dans le pied de page */
 }
