@@ -6,9 +6,13 @@ body {
     background-color: #fff;
     color: #333;
     text-align: center;
-    position: relative;
-    min-height: 100vh; /* Pour que la page occupe toujours toute la hauteur */
-    display: block; /* Pas de flex ici pour éviter de perturber le JavaScript */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* S'assure que le body occupe toujours toute la hauteur */
+}
+
+main {
+    flex-grow: 1; /* Permet à la section principale de prendre toute la place disponible */
 }
 
 /* En-tête avec une image et un menu fixe */
@@ -139,12 +143,7 @@ nav .menu li a {
     background-color: #f8f8f8;
     padding: 20px;
     text-align: center;
-    margin-top: 20px; /* Ajusté pour ne pas interférer avec le contenu */
-}
-
-#footer-about .about-section,
-#footer-about .events-section {
-    margin-bottom: 20px;
+    margin-top: 20px; /* Pour ne pas interférer avec le contenu */
 }
 
 /* Pour le positionnement du footer dans tous les cas */
