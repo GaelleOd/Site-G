@@ -1,4 +1,4 @@
-/* Style général du body */
+/* Définir la police et le style de base pour le corps */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -8,7 +8,7 @@ body {
     text-align: center;
 }
 
-/* Style de l'en-tête */
+/* En-tête avec une image et un menu fixe */
 header {
     position: relative;
     background-color: #f8f8f8;
@@ -20,7 +20,6 @@ header .banner {
     height: auto;
 }
 
-/* Menu fixe en haut de la page */
 nav.fixed-menu {
     position: fixed;
     top: 0;
@@ -49,7 +48,7 @@ nav .menu li a {
     font-weight: bold;
 }
 
-/* Section pour les sous-sections */
+/* Sous-sections de la page Mes Créations */
 .subsection-container {
     display: flex;
     justify-content: center;
@@ -58,7 +57,6 @@ nav .menu li a {
     flex-wrap: wrap; /* Pour que les sous-sections passent à la ligne si nécessaire */
 }
 
-/* Style des sous-sections */
 .subsection {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -100,7 +98,7 @@ nav .menu li a {
     max-height: 1000px; /* Grande hauteur pour permettre le déploiement de la section */
 }
 
-/* Grille des produits */
+/* Mise en forme des produits affichés */
 .product-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 5 articles par ligne */
@@ -108,7 +106,6 @@ nav .menu li a {
     padding: 20px;
 }
 
-/* Style des produits */
 .product {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -147,7 +144,6 @@ nav .menu li a {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Bas de page */
 footer {
     background-color: #f8f8f8;
     padding: 10px;
