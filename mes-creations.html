@@ -61,59 +61,67 @@
 
     <!-- Script pour gérer l'affichage des produits en fonction de la sous-section -->
     <script>
-        // Fonction pour afficher les produits d'une sous-section
-        function displayProducts(subsectionId) {
-            const productsSection = document.getElementById("products-section");
-            productsSection.innerHTML = ''; // Vide la section des produits à chaque changement de sous-section
+        // Lien vers ta feuille Google Sheets
+        const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvtWdoC_e2UFChnySlHabXSnxpC8Qx_2FVMe0uLnc1emOAPxZ6dqJld3m9QBjGiSCe2XTd8ehUCU0v/gviz/tq?tqx=out:json";
 
-            // Ajouter une logique pour charger les produits en fonction de la sous-section
-            if (subsectionId === "subsection1") {
-                productsSection.innerHTML = `
-                    <h2>Produits de la Sous-section 1</h2>
-                    <div class="product-list">
-                        <!-- Exemple d'article -->
-                        <div class="product">
-                            <img src="product1.jpg" alt="Produit 1">
-                            <h3>Produit 1</h3>
-                            <p>Description du produit 1</p>
-                            <p><strong>Prix : 30€</strong></p>
-                        </div>
-                        <!-- Ajoute d'autres produits ici -->
-                    </div>
-                `;
-            } else if (subsectionId === "subsection2") {
-                productsSection.innerHTML = `
-                    <h2>Produits de la Sous-section 2</h2>
-                    <div class="product-list">
-                        <!-- Exemple d'article -->
-                        <div class="product">
-                            <img src="product2.jpg" alt="Produit 2">
-                            <h3>Produit 2</h3>
-                            <p>Description du produit 2</p>
-                            <p><strong>Prix : 25€</strong></p>
-                        </div>
-                        <!-- Ajoute d'autres produits ici -->
-                    </div>
-                `;
+        // Fonction pour récupérer les produits depuis Google Sheets
+        async function fetchProducts(subsectionId) {
+            const productsSection = document.getElementById("products-section");
+            productsSection.innerHTML = ''; // Vider la section avant de la remplir avec les nouveaux produits
+
+            try {
+                const response = await fetch(sheetURL);
+                const data = await response.text();
+                const json = JSON.parse(data.substr(47).slice(0, -2)); // Extraction des données JSON
+                const rows = json.table.rows;
+                
+                // Filtrer les produits en fonction de la sous-section
+                const filteredRows = rows.filter(row => {
+                    // Ici, tu peux ajouter la logique pour filtrer les produits en fonction de la sous-section
+                    // Par exemple, en utilisant une colonne de catégorie ou un identifiant spécifique
+                    // Pour l'instant, on suppose qu'on récupère tous les produits de la feuille.
+                    return true; // A modifier si tu veux une logique spécifique pour chaque sous-section
+                });
+
+                // Ajouter les produits à la section
+                if (filteredRows.length === 0) {
+                    productsSection.innerHTML = "<p>Aucun produit trouvé dans cette sous-section.</p>";
+                } else {
+                    const productListHTML = filteredRows.map(row => {
+                        const [title, description, price, stock, image] = row.c;
+                        return `
+                            <div class="product">
+                                <img src="${image?.v || 'default.jpg'}" alt="${title?.v || 'Produit'}">
+                                <h3>${title?.v || 'Titre inconnu'}</h3>
+                                <p>${description?.v || 'Description non disponible'}</p>
+                                <p><strong>Prix :</strong> ${price?.v || 'Non précisé'} €</p>
+                                <p><strong>Stock :</strong> ${stock?.v || 'Non spécifié'}</p>
+                            </div>
+                        `;
+                    }).join('');
+                    productsSection.innerHTML = `<h2>Produits de la Sous-section</h2><div class="product-list">${productListHTML}</div>`;
+                }
+            } catch (error) {
+                console.error("Erreur lors de la récupération des produits :", error);
+                productsSection.innerHTML = "<p>Erreur lors du chargement des produits. Veuillez réessayer plus tard.</p>";
             }
-            // Ajoute des conditions similaires pour les autres sous-sections
         }
 
         // Ajouter des gestionnaires de clics sur chaque sous-section
         document.getElementById("subsection1").addEventListener("click", function() {
-            displayProducts("subsection1");
+            fetchProducts("subsection1");
         });
         document.getElementById("subsection2").addEventListener("click", function() {
-            displayProducts("subsection2");
+            fetchProducts("subsection2");
         });
         document.getElementById("subsection3").addEventListener("click", function() {
-            displayProducts("subsection3");
+            fetchProducts("subsection3");
         });
         document.getElementById("subsection4").addEventListener("click", function() {
-            displayProducts("subsection4");
+            fetchProducts("subsection4");
         });
         document.getElementById("subsection5").addEventListener("click", function() {
-            displayProducts("subsection5");
+            fetchProducts("subsection5");
         });
     </script>
 </body>
