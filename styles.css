@@ -1,18 +1,14 @@
-/* Reset de base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Style global du body */
+/* Styles généraux */
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     background-color: #fff;
     color: #333;
+    text-align: center;
 }
 
-/* En-tête et menu fixe */
+/* En-tête */
 header {
     position: relative;
     background-color: #f8f8f8;
@@ -24,14 +20,15 @@ header .banner {
     height: auto;
 }
 
+/* Menu fixe */
 nav.fixed-menu {
     position: fixed;
     top: 0;
     width: 100%;
     background-color: #fff;
-    border: 1px solid #000;
+    border: 1px solid #000; /* Ajoute un encadrement noir */
     z-index: 1000;
-    padding: 15px 0;
+    padding: 15px 0; /* Augmente la taille de la bande */
 }
 
 nav .menu {
@@ -52,13 +49,13 @@ nav .menu li a {
     font-weight: bold;
 }
 
-/* Sous-sections */
+/* Section des sous-sections */
 .subsection-container {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 20px; /* Espacement entre les sous-sections */
     padding: 40px 20px;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Pour que les sous-sections passent à la ligne si nécessaire */
 }
 
 .subsection {
@@ -67,7 +64,8 @@ nav .menu li a {
     border-radius: 10px;
     padding: 20px;
     text-align: center;
-    width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 200px; /* Largeur fixe pour chaque sous-section */
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -84,28 +82,21 @@ nav .menu li a {
 }
 
 .subsection:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Effet de zoom au survol */
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Section des produits */
 .products-section {
     overflow: hidden;
-    transition: max-height 0.5s ease, height 0.5s ease;
-    max-height: 0;
-    height: 0;
+    transition: max-height 0.5s ease; /* Animation de déploiement */
+    max-height: 0; /* Par défaut, la hauteur est nulle (cachée) */
 }
 
-.products-section.open {
-    max-height: 1000px;
-    height: auto;
-}
-
-/* Liste des produits */
 .product-list {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(5, 1fr); /* 5 articles par ligne */
+    gap: 20px; /* Espacement entre les articles */
     padding: 20px;
 }
 
@@ -117,10 +108,11 @@ nav .menu li a {
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
 }
 
 .product img {
-    width: 100%;
+    width: 100%; /* Image agrandie */
     max-height: 200px;
     object-fit: cover;
     margin-bottom: 10px;
@@ -128,12 +120,12 @@ nav .menu li a {
 }
 
 .product h3 {
-    font-size: 1.5em;
+    font-size: 1.5em; /* Titre plus grand */
     margin-bottom: 10px;
 }
 
 .product p {
-    font-size: 1.2em;
+    font-size: 1.2em; /* Texte plus lisible */
     margin-bottom: 10px;
 }
 
@@ -142,11 +134,11 @@ nav .menu li a {
 }
 
 .product:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Effet de zoom au survol */
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Pied de page */
+/* Bas de page */
 footer {
     background-color: #f8f8f8;
     padding: 10px;
