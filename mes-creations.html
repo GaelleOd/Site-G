@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Créations - Sous-section 1</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Masquer la section des produits par défaut */
+        .products-section {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <!-- En-tête avec une image et un menu fixe -->
@@ -87,7 +93,13 @@
 
         // Ajouter un gestionnaire de clic pour la sous-section 1
         document.getElementById("subsection1").addEventListener("click", function() {
-            fetchProducts(); // Charger les produits lorsque la sous-section 1 est cliquée
+            const productsSection = document.getElementById("products-section");
+            
+            // Afficher la section des produits
+            productsSection.style.display = "block"; 
+            
+            // Charger les produits lorsque la sous-section 1 est cliquée
+            fetchProducts();
         });
     </script>
 </body>
