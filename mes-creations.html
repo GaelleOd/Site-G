@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- En-tête avec une image et un menu fixe (copié de index.html) -->
+    <!-- En-tête avec une image et un menu fixe -->
     <header>
         <img src="banner.jpg" alt="Bannière de mes créations" class="banner">
         <nav class="fixed-menu">
@@ -25,30 +25,31 @@
         <section id="subsections" class="subsections">
             <h2>Mes Créations</h2>
             <div class="subsection-container">
-                <!-- Première sous-section avec une liste de produits -->
+                <!-- Chaque sous-section contient un identifiant unique et un conteneur pour les produits -->
                 <div class="subsection" id="subsection1">
+                    <img src="image1.jpg" alt="Sous-section 1">
                     <h3>Sous-section 1</h3>
-                    <div id="subsection1-products" class="product-list">
-                        <!-- Les produits seront ajoutés ici par JavaScript -->
-                    </div>
+                    <div class="products-list" id="products-list-1" style="display:none;"></div>
                 </div>
-                
-                <!-- Autres sous-sections -->
-                <div class="subsection">
+                <div class="subsection" id="subsection2">
                     <img src="image2.jpg" alt="Sous-section 2">
                     <h3>Sous-section 2</h3>
+                    <div class="products-list" id="products-list-2" style="display:none;"></div>
                 </div>
-                <div class="subsection">
+                <div class="subsection" id="subsection3">
                     <img src="image3.jpg" alt="Sous-section 3">
                     <h3>Sous-section 3</h3>
+                    <div class="products-list" id="products-list-3" style="display:none;"></div>
                 </div>
-                <div class="subsection">
+                <div class="subsection" id="subsection4">
                     <img src="image4.jpg" alt="Sous-section 4">
                     <h3>Sous-section 4</h3>
+                    <div class="products-list" id="products-list-4" style="display:none;"></div>
                 </div>
-                <div class="subsection">
+                <div class="subsection" id="subsection5">
                     <img src="image5.jpg" alt="Sous-section 5">
                     <h3>Sous-section 5</h3>
+                    <div class="products-list" id="products-list-5" style="display:none;"></div>
                 </div>
             </div>
         </section>
@@ -59,42 +60,52 @@
         <p>© 2025 Gaëlle & Amour. Tous droits réservés.</p>
     </footer>
 
-    <!-- Script pour charger les produits depuis Google Sheets -->
+    <!-- Script pour afficher les produits au clic -->
     <script>
-        // Lien vers la feuille Google Sheets avec les produits à vendre dans la première sous-section
-        const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvtWdoC_e2UFChnySlHabXSnxpC8Qx_2FVMe0uLnc1emOAPxZ6dqJld3m9QBjGiSCe2XTd8ehUCU0v/gviz/tq?tqx=out:json";
+        document.querySelectorAll('.subsection').forEach(subsection => {
+            subsection.addEventListener('click', function () {
+                // Toggle d'affichage des produits
+                const productsList = document.getElementById(`products-list-${this.id.substring(10)}`);
+                if (productsList.style.display === 'none' || productsList.style.display === '') {
+                    productsList.style.display = 'block';
+                    fetchProducts(this.id.substring(10));  // Chargement des produits selon la sous-section
+                } else {
+                    productsList.style.display = 'none';
+                }
+            });
+        });
 
-        // Fonction pour récupérer les produits à vendre dans la sous-section 1
-        async function fetchSubsection1Products() {
+        // Fonction pour récupérer les produits de la sous-section
+        async function fetchProducts(subsectionId) {
+            const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvtWdoC_e2UFChnySlHabXSnxpC8Qx_2FVMe0uLnc1emOAPxZ6dqJld3m9QBjGiSCe2XTd8ehUCU0v/pubhtml";
             try {
                 const response = await fetch(sheetURL);
                 const data = await response.text();
                 const json = JSON.parse(data.substr(47).slice(0, -2));
                 const rows = json.table.rows;
 
-                const productList = document.getElementById("subsection1-products");
+                const productList = document.getElementById(`products-list-${subsectionId}`);
+                productList.innerHTML = ''; // Réinitialiser la liste avant d'ajouter les produits
                 rows.forEach(row => {
-                    const [title, description, price, stock, image] = row.c;
-                    const productHTML = `
-                        <div class="product">
-                            <img src="${image?.v || 'default.jpg'}" alt="${title?.v || 'Produit'}">
-                            <h3>${title?.v || 'Titre inconnu'}</h3>
-                            <p>${description?.v || 'Description non disponible'}</p>
-                            <p><strong>Prix :</strong> ${price?.v || 'Non précisé'} €</p>
-                            <p><strong>Stock :</strong> ${stock?.v || 'Non spécifié'}</p>
-                        </div>
-                    `;
-                    productList.innerHTML += productHTML;
+                    const [title, description, price, stock, image, section] = row.c;
+                    if (section && section.v === `Sous-section ${subsectionId}`) {  // Afficher les produits qui correspondent à la sous-section
+                        const productHTML = `
+                            <div class="product">
+                                <img src="${image?.v || 'default.jpg'}" alt="${title?.v || 'Produit'}">
+                                <h3>${title?.v || 'Titre inconnu'}</h3>
+                                <p>${description?.v || 'Description non disponible'}</p>
+                                <p><strong>Prix :</strong> ${price?.v || 'Non précisé'} €</p>
+                                <p><strong>Stock :</strong> ${stock?.v || 'Non spécifié'}</p>
+                            </div>
+                        `;
+                        productList.innerHTML += productHTML;
+                    }
                 });
             } catch (error) {
-                console.error("Erreur lors de la récupération des produits :", error);
-                document.getElementById("subsection1-products").innerHTML = 
-                    "<p>Erreur lors du chargement des produits. Veuillez réessayer plus tard.</p>";
+                console.error("Erreur lors du chargement des produits :", error);
+                document.getElementById(`products-list-${subsectionId}`).innerHTML = "<p>Erreur lors du chargement des produits. Veuillez réessayer plus tard.</p>";
             }
         }
-
-        // Charger les produits au chargement de la page pour la première sous-section
-        fetchSubsection1Products();
     </script>
 </body>
 </html>
