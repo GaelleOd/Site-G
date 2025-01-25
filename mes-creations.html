@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Créations - Sous-sections</title>
+    <title>Mes Créations</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -25,7 +25,7 @@
         <section id="subsections" class="subsections">
             <h2>Mes Créations</h2>
             <div class="subsection-container">
-                <!-- Sous-section 1 avec un événement click -->
+                <!-- Sous-section 1 -->
                 <div class="subsection" id="subsection1">
                     <img src="image1.jpg" alt="Sous-section 1">
                     <h3>Sous-section 1</h3>
@@ -67,27 +67,24 @@
 
     <!-- Script pour récupérer et afficher les produits -->
     <script>
-        // Liens vers les feuilles Google Sheets pour chaque sous-section
-        const sheetURLs = {
-            subsection1: "https://docs.google.com/spreadsheets/d/13J4SUfZdUHoedGH_CG5Me-HYfSMk724bKMDom0Y6rNA/gviz/tq?tqx=out:json",
-            subsection2: "https://docs.google.com/spreadsheets/d/1vQ3XobNvDUthj_8EhAw1fvq9yo6sMTy19zhW01rZCC0/gviz/tq?tqx=out:json",
-            subsection3: "https://docs.google.com/spreadsheets/d/1qVr3hAHNcYQQdd5juzRKwQrt7GB0CDRuzDl-68psKUw/gviz/tq?tqx=out:json",
-            subsection4: "https://docs.google.com/spreadsheets/d/1KN266-Hx3NXt3QOss8KHY8c-51HY6Ip58GkbTkfhzxE/gviz/tq?tqx=out:json",
-            subsection5: "https://docs.google.com/spreadsheets/d/1g259umj-IRj9dhWAgkqj0zOlsOoa0wbSRWtP2wQM2Oo/gviz/tq?tqx=out:json"
-        };
+        const sheetURLs = [
+            "https://docs.google.com/spreadsheets/d/13J4SUfZdUHoedGH_CG5Me-HYfSMk724bKMDom0Y6rNA/gviz/tq?tqx=out:json", // Sous-section 1
+            "https://docs.google.com/spreadsheets/d/1vQ3XobNvDUthj_8EhAw1fvq9yo6sMTy19zhW01rZCC0/gviz/tq?tqx=out:json", // Sous-section 2
+            "https://docs.google.com/spreadsheets/d/1qVr3hAHNcYQQdd5juzRKwQrt7GB0CDRuzDl-68psKUw/gviz/tq?tqx=out:json", // Sous-section 3
+            "https://docs.google.com/spreadsheets/d/1KN266-Hx3NXt3QOss8KHY8c-51HY6Ip58GkbTkfhzxE/gviz/tq?tqx=out:json", // Sous-section 4
+            "https://docs.google.com/spreadsheets/d/1g259umj-IRj9dhWAgkqj0zOlsOoa0wbSRWtP2wQM2Oo/gviz/tq?tqx=out:json"  // Sous-section 5
+        ];
 
-        // Fonction pour récupérer les produits depuis Google Sheets
-        async function fetchProducts(subsection) {
+        async function fetchProducts(sheetURL) {
             const productsSection = document.getElementById("products-section");
             productsSection.innerHTML = ''; // Vider la section avant de la remplir avec les nouveaux produits
 
             try {
-                const response = await fetch(sheetURLs[subsection]);
+                const response = await fetch(sheetURL);
                 const data = await response.text();
                 const json = JSON.parse(data.substr(47).slice(0, -2)); // Extraction des données JSON
                 const rows = json.table.rows;
 
-                // Ajouter les produits à la section
                 if (rows.length === 0) {
                     productsSection.innerHTML = "<p>Aucun produit trouvé dans cette sous-section.</p>";
                 } else {
@@ -111,31 +108,20 @@
             }
         }
 
-        // Ajouter un gestionnaire de clic pour chaque sous-section
-        const subsections = document.querySelectorAll(".subsection");
-        subsections.forEach(subsection => {
-            subsection.addEventListener("click", function() {
-                const subsectionId = subsection.id;
+        // Gestion de l'ouverture et fermeture des sous-sections
+        document.querySelectorAll('.subsection').forEach((subsection, index) => {
+            subsection.addEventListener('click', () => {
                 const productsSection = document.getElementById("products-section");
 
-                // Vérifier si les produits sont déjà affichés pour cette sous-section
-                if (productsSection.classList.contains(subsectionId)) {
-                    productsSection.classList.remove(subsectionId);
-                    productsSection.style.maxHeight = "0px"; // Réduire la hauteur
+                if (productsSection.style.maxHeight) {
+                    // Si la section est déjà ouverte, la fermer
+                    productsSection.style.maxHeight = null;
+                    productsSection.classList.remove('open');
                 } else {
-                    // Fermer tous les autres produits
-                    subsections.forEach(item => {
-                        const otherSection = document.getElementById("products-section");
-                        if (otherSection.classList.contains(item.id)) {
-                            otherSection.classList.remove(item.id);
-                            otherSection.style.maxHeight = "0px"; // Réduire la hauteur
-                        }
-                    });
-
-                    // Ouvrir cette sous-section spécifique
-                    productsSection.classList.add(subsectionId);
-                    productsSection.style.maxHeight = "500px"; // Réouvrir cette sous-section avec animation
-                    fetchProducts(subsectionId);
+                    // Ouvrir la section et charger les produits
+                    productsSection.style.maxHeight = productsSection.scrollHeight + "px";
+                    productsSection.classList.add('open');
+                    fetchProducts(sheetURLs[index]); // Charger les produits spécifiques à la sous-section
                 }
             });
         });
