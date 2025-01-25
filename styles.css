@@ -1,14 +1,18 @@
-/* Styles généraux */
-body {
-    font-family: Arial, sans-serif;
+/* Reset de base */
+* {
     margin: 0;
     padding: 0;
-    background-color: #fff;
-    color: #333;
-    text-align: center;
+    box-sizing: border-box;
 }
 
-/* En-tête */
+/* Style global du body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+/* En-tête et menu fixe */
 header {
     position: relative;
     background-color: #f8f8f8;
@@ -20,15 +24,14 @@ header .banner {
     height: auto;
 }
 
-/* Menu fixe */
 nav.fixed-menu {
     position: fixed;
     top: 0;
     width: 100%;
     background-color: #fff;
-    border: 1px solid #000; /* Ajoute un encadrement noir */
+    border: 1px solid #000;
     z-index: 1000;
-    padding: 15px 0; /* Augmente la taille de la bande */
+    padding: 15px 0;
 }
 
 nav .menu {
@@ -49,13 +52,13 @@ nav .menu li a {
     font-weight: bold;
 }
 
-/* Section des sous-sections */
+/* Sous-sections */
 .subsection-container {
     display: flex;
     justify-content: center;
-    gap: 20px; /* Espacement entre les sous-sections */
+    gap: 20px;
     padding: 40px 20px;
-    flex-wrap: wrap; /* Pour que les sous-sections passent à la ligne si nécessaire */
+    flex-wrap: wrap;
 }
 
 .subsection {
@@ -64,8 +67,7 @@ nav .menu li a {
     border-radius: 10px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 200px; /* Largeur fixe pour chaque sous-section */
+    width: 200px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -82,21 +84,28 @@ nav .menu li a {
 }
 
 .subsection:hover {
-    transform: scale(1.05); /* Effet de zoom au survol */
+    transform: scale(1.05);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Section des produits */
 .products-section {
     overflow: hidden;
-    transition: max-height 0.5s ease; /* Animation de déploiement */
-    max-height: 0; /* Par défaut, la hauteur est nulle (cachée) */
+    transition: max-height 0.5s ease, height 0.5s ease;
+    max-height: 0;
+    height: 0;
 }
 
+.products-section.open {
+    max-height: 1000px;
+    height: auto;
+}
+
+/* Liste des produits */
 .product-list {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 articles par ligne */
-    gap: 20px; /* Espacement entre les articles */
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
     padding: 20px;
 }
 
@@ -108,11 +117,10 @@ nav .menu li a {
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
-    overflow: hidden;
 }
 
 .product img {
-    width: 100%; /* Image agrandie */
+    width: 100%;
     max-height: 200px;
     object-fit: cover;
     margin-bottom: 10px;
@@ -120,12 +128,12 @@ nav .menu li a {
 }
 
 .product h3 {
-    font-size: 1.5em; /* Titre plus grand */
+    font-size: 1.5em;
     margin-bottom: 10px;
 }
 
 .product p {
-    font-size: 1.2em; /* Texte plus lisible */
+    font-size: 1.2em;
     margin-bottom: 10px;
 }
 
@@ -134,11 +142,11 @@ nav .menu li a {
 }
 
 .product:hover {
-    transform: scale(1.05); /* Effet de zoom au survol */
+    transform: scale(1.05);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Bas de page */
+/* Pied de page */
 footer {
     background-color: #f8f8f8;
     padding: 10px;
