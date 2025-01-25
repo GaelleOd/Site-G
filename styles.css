@@ -152,4 +152,16 @@ footer {
     padding: 10px;
     border-top: 1px solid #ddd;
     font-size: 0.9em;
+    text-align: center;
+}
+
+#footer-about {
+    background-color: #f8f8f8;
+    padding: 20px;
+    text-align: center;
+}
+
+#footer-about .about-section,
+#footer-about .events-section {
+    margin-bottom: 20px;
 }
