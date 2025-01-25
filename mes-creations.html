@@ -88,8 +88,8 @@
         // Ajouter un gestionnaire de clic pour la sous-section 1
         document.getElementById("subsection1").addEventListener("click", function() {
             const productsSection = document.getElementById("products-section");
-
-            // Si la section est ouverte, on la ferme
+            
+            // Si la section est déjà ouverte, on la ferme
             if (productsSection.classList.contains("open")) {
                 productsSection.classList.remove("open");
             } else {
