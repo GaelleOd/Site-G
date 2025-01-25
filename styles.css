@@ -7,9 +7,8 @@ body {
     color: #333;
     text-align: center;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Laisse la page s'étendre */
+    min-height: 100vh; /* Pour que la page occupe toujours toute la hauteur */
+    display: block; /* Pas de flex ici pour éviter de perturber le JavaScript */
 }
 
 /* En-tête avec une image et un menu fixe */
@@ -137,10 +136,10 @@ nav .menu li a {
 
 /* Footer centré en bas */
 #footer-about {
-    margin-top: auto; /* Le footer est maintenant toujours en bas */
     background-color: #f8f8f8;
     padding: 20px;
     text-align: center;
+    margin-top: 20px; /* Ajusté pour ne pas interférer avec le contenu */
 }
 
 #footer-about .about-section,
