@@ -88,14 +88,15 @@ nav .menu li a {
 /* Section pour les produits, cachée au départ */
 .products-section {
     display: block; /* Toujours afficher la section, mais avec la hauteur contrôlée */
-    max-height: 0; /* Initialement, la hauteur est 0 pour cacher le contenu */
+    height: 0; /* Initialement, la hauteur est 0 pour cacher le contenu */
     overflow: hidden; /* Empêche le débordement du contenu invisible */
-    transition: max-height 0.5s ease-out; /* Transition douce pour la hauteur */
+    transition: height 0.5s ease-out; /* Transition douce pour la hauteur */
 }
 
 /* Lorsqu'on clique sur la sous-section, on ouvre la section des produits */
 .products-section.open {
-    max-height: 1000px; /* Grande hauteur pour permettre le déploiement de la section */
+    height: auto; /* Hauteur automatique pour permettre l'ouverture de la section */
+    padding: 20px; /* Ajouter du padding à l'ouverture */
 }
 
 /* Mise en forme des produits affichés */
