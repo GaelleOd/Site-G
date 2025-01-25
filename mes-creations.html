@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Créations - Sous-section 1</title>
+    <title>Mes Créations - Sous-sections</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -30,12 +30,32 @@
                     <img src="image1.jpg" alt="Sous-section 1">
                     <h3>Sous-section 1</h3>
                 </div>
+                <!-- Sous-section 2 -->
+                <div class="subsection" id="subsection2">
+                    <img src="image2.jpg" alt="Sous-section 2">
+                    <h3>Sous-section 2</h3>
+                </div>
+                <!-- Sous-section 3 -->
+                <div class="subsection" id="subsection3">
+                    <img src="image3.jpg" alt="Sous-section 3">
+                    <h3>Sous-section 3</h3>
+                </div>
+                <!-- Sous-section 4 -->
+                <div class="subsection" id="subsection4">
+                    <img src="image4.jpg" alt="Sous-section 4">
+                    <h3>Sous-section 4</h3>
+                </div>
+                <!-- Sous-section 5 -->
+                <div class="subsection" id="subsection5">
+                    <img src="image5.jpg" alt="Sous-section 5">
+                    <h3>Sous-section 5</h3>
+                </div>
             </div>
         </section>
 
         <!-- Section pour afficher les produits -->
         <section id="products-section" class="products-section">
-            <h2>Produits de la Sous-section 1</h2>
+            <h2>Produits de la Sous-section</h2>
             <!-- Les produits s'afficheront ici -->
         </section>
     </main>
@@ -47,16 +67,22 @@
 
     <!-- Script pour récupérer et afficher les produits -->
     <script>
-        // Lien vers ta feuille Google Sheets
-        const sheetURL = "https://docs.google.com/spreadsheets/d/13J4SUfZdUHoedGH_CG5Me-HYfSMk724bKMDom0Y6rNA/gviz/tq?tqx=out:json";
+        // Liens vers les feuilles Google Sheets pour chaque sous-section
+        const sheetURLs = {
+            subsection1: "https://docs.google.com/spreadsheets/d/13J4SUfZdUHoedGH_CG5Me-HYfSMk724bKMDom0Y6rNA/gviz/tq?tqx=out:json",
+            subsection2: "https://docs.google.com/spreadsheets/d/1vQ3XobNvDUthj_8EhAw1fvq9yo6sMTy19zhW01rZCC0/gviz/tq?tqx=out:json",
+            subsection3: "https://docs.google.com/spreadsheets/d/1qVr3hAHNcYQQdd5juzRKwQrt7GB0CDRuzDl-68psKUw/gviz/tq?tqx=out:json",
+            subsection4: "https://docs.google.com/spreadsheets/d/1KN266-Hx3NXt3QOss8KHY8c-51HY6Ip58GkbTkfhzxE/gviz/tq?tqx=out:json",
+            subsection5: "https://docs.google.com/spreadsheets/d/1g259umj-IRj9dhWAgkqj0zOlsOoa0wbSRWtP2wQM2Oo/gviz/tq?tqx=out:json"
+        };
 
         // Fonction pour récupérer les produits depuis Google Sheets
-        async function fetchProducts() {
+        async function fetchProducts(subsection) {
             const productsSection = document.getElementById("products-section");
             productsSection.innerHTML = ''; // Vider la section avant de la remplir avec les nouveaux produits
 
             try {
-                const response = await fetch(sheetURL);
+                const response = await fetch(sheetURLs[subsection]);
                 const data = await response.text();
                 const json = JSON.parse(data.substr(47).slice(0, -2)); // Extraction des données JSON
                 const rows = json.table.rows;
@@ -85,18 +111,21 @@
             }
         }
 
-        // Ajouter un gestionnaire de clic pour la sous-section 1
+        // Ajouter un gestionnaire de clic pour chaque sous-section
         document.getElementById("subsection1").addEventListener("click", function() {
-            const productsSection = document.getElementById("products-section");
-            
-            // Si la section est déjà ouverte, on la ferme
-            if (productsSection.classList.contains("open")) {
-                productsSection.classList.remove("open");
-            } else {
-                // Ouvrir la section
-                fetchProducts(); // Charger les produits
-                productsSection.classList.add("open");
-            }
+            fetchProducts("subsection1"); // Charger les produits de la sous-section 1
+        });
+        document.getElementById("subsection2").addEventListener("click", function() {
+            fetchProducts("subsection2"); // Charger les produits de la sous-section 2
+        });
+        document.getElementById("subsection3").addEventListener("click", function() {
+            fetchProducts("subsection3"); // Charger les produits de la sous-section 3
+        });
+        document.getElementById("subsection4").addEventListener("click", function() {
+            fetchProducts("subsection4"); // Charger les produits de la sous-section 4
+        });
+        document.getElementById("subsection5").addEventListener("click", function() {
+            fetchProducts("subsection5"); // Charger les produits de la sous-section 5
         });
     </script>
 </body>
