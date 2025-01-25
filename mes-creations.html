@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Créations</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Style pour les sous-sections */
+        .subsections {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 40px auto;
+            max-width: 1200px;
+        }
+
+        .subsection {
+            flex: 1;
+            max-width: 200px;
+            min-width: 150px;
+            height: 200px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .subsection:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .subsection img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        .subsection h3 {
+            position: relative;
+            z-index: 2;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 8px;
+            margin-top: 80px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Section des sous-sections -->
+    <main>
+        <section id="creations">
+            <h2>Mes Créations</h2>
+            <div class="subsections">
+                <div class="subsection">
+                    <img src="image1.jpg" alt="Sous-section 1">
+                    <h3>Coussins</h3>
+                </div>
+                <div class="subsection">
+                    <img src="image2.jpg" alt="Sous-section 2">
+                    <h3>Nappes</h3>
+                </div>
+                <div class="subsection">
+                    <img src="image3.jpg" alt="Sous-section 3">
+                    <h3>Pochettes</h3>
+                </div>
+                <div class="subsection">
+                    <img src="image4.jpg" alt="Sous-section 4">
+                    <h3>Rideaux</h3>
+                </div>
+                <div class="subsection">
+                    <img src="image5.jpg" alt="Sous-section 5">
+                    <h3>Serviettes</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
