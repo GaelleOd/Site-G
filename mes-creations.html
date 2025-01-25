@@ -25,33 +25,32 @@
         <section id="subsections" class="subsections">
             <h2>Mes Créations</h2>
             <div class="subsection-container">
-                <!-- Chaque sous-section contient un identifiant unique et un conteneur pour les produits -->
                 <div class="subsection" id="subsection1">
                     <img src="image1.jpg" alt="Sous-section 1">
                     <h3>Sous-section 1</h3>
-                    <div class="products-list" id="products-list-1" style="display:none;"></div>
                 </div>
                 <div class="subsection" id="subsection2">
                     <img src="image2.jpg" alt="Sous-section 2">
                     <h3>Sous-section 2</h3>
-                    <div class="products-list" id="products-list-2" style="display:none;"></div>
                 </div>
                 <div class="subsection" id="subsection3">
                     <img src="image3.jpg" alt="Sous-section 3">
                     <h3>Sous-section 3</h3>
-                    <div class="products-list" id="products-list-3" style="display:none;"></div>
                 </div>
                 <div class="subsection" id="subsection4">
                     <img src="image4.jpg" alt="Sous-section 4">
                     <h3>Sous-section 4</h3>
-                    <div class="products-list" id="products-list-4" style="display:none;"></div>
                 </div>
                 <div class="subsection" id="subsection5">
                     <img src="image5.jpg" alt="Sous-section 5">
                     <h3>Sous-section 5</h3>
-                    <div class="products-list" id="products-list-5" style="display:none;"></div>
                 </div>
             </div>
+        </section>
+
+        <!-- Section pour afficher les produits -->
+        <section id="products-section" class="products-section">
+            <!-- Les produits s'afficheront ici en fonction de la sous-section cliquée -->
         </section>
     </main>
 
@@ -60,52 +59,62 @@
         <p>© 2025 Gaëlle & Amour. Tous droits réservés.</p>
     </footer>
 
-    <!-- Script pour afficher les produits au clic -->
+    <!-- Script pour gérer l'affichage des produits en fonction de la sous-section -->
     <script>
-        document.querySelectorAll('.subsection').forEach(subsection => {
-            subsection.addEventListener('click', function () {
-                // Toggle d'affichage des produits
-                const productsList = document.getElementById(`products-list-${this.id.substring(10)}`);
-                if (productsList.style.display === 'none' || productsList.style.display === '') {
-                    productsList.style.display = 'block';
-                    fetchProducts(this.id.substring(10));  // Chargement des produits selon la sous-section
-                } else {
-                    productsList.style.display = 'none';
-                }
-            });
-        });
+        // Fonction pour afficher les produits d'une sous-section
+        function displayProducts(subsectionId) {
+            const productsSection = document.getElementById("products-section");
+            productsSection.innerHTML = ''; // Vide la section des produits à chaque changement de sous-section
 
-        // Fonction pour récupérer les produits de la sous-section
-        async function fetchProducts(subsectionId) {
-            const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvtWdoC_e2UFChnySlHabXSnxpC8Qx_2FVMe0uLnc1emOAPxZ6dqJld3m9QBjGiSCe2XTd8ehUCU0v/pubhtml";
-            try {
-                const response = await fetch(sheetURL);
-                const data = await response.text();
-                const json = JSON.parse(data.substr(47).slice(0, -2));
-                const rows = json.table.rows;
-
-                const productList = document.getElementById(`products-list-${subsectionId}`);
-                productList.innerHTML = ''; // Réinitialiser la liste avant d'ajouter les produits
-                rows.forEach(row => {
-                    const [title, description, price, stock, image, section] = row.c;
-                    if (section && section.v === `Sous-section ${subsectionId}`) {  // Afficher les produits qui correspondent à la sous-section
-                        const productHTML = `
-                            <div class="product">
-                                <img src="${image?.v || 'default.jpg'}" alt="${title?.v || 'Produit'}">
-                                <h3>${title?.v || 'Titre inconnu'}</h3>
-                                <p>${description?.v || 'Description non disponible'}</p>
-                                <p><strong>Prix :</strong> ${price?.v || 'Non précisé'} €</p>
-                                <p><strong>Stock :</strong> ${stock?.v || 'Non spécifié'}</p>
-                            </div>
-                        `;
-                        productList.innerHTML += productHTML;
-                    }
-                });
-            } catch (error) {
-                console.error("Erreur lors du chargement des produits :", error);
-                document.getElementById(`products-list-${subsectionId}`).innerHTML = "<p>Erreur lors du chargement des produits. Veuillez réessayer plus tard.</p>";
+            // Ajouter une logique pour charger les produits en fonction de la sous-section
+            if (subsectionId === "subsection1") {
+                productsSection.innerHTML = `
+                    <h2>Produits de la Sous-section 1</h2>
+                    <div class="product-list">
+                        <!-- Exemple d'article -->
+                        <div class="product">
+                            <img src="product1.jpg" alt="Produit 1">
+                            <h3>Produit 1</h3>
+                            <p>Description du produit 1</p>
+                            <p><strong>Prix : 30€</strong></p>
+                        </div>
+                        <!-- Ajoute d'autres produits ici -->
+                    </div>
+                `;
+            } else if (subsectionId === "subsection2") {
+                productsSection.innerHTML = `
+                    <h2>Produits de la Sous-section 2</h2>
+                    <div class="product-list">
+                        <!-- Exemple d'article -->
+                        <div class="product">
+                            <img src="product2.jpg" alt="Produit 2">
+                            <h3>Produit 2</h3>
+                            <p>Description du produit 2</p>
+                            <p><strong>Prix : 25€</strong></p>
+                        </div>
+                        <!-- Ajoute d'autres produits ici -->
+                    </div>
+                `;
             }
+            // Ajoute des conditions similaires pour les autres sous-sections
         }
+
+        // Ajouter des gestionnaires de clics sur chaque sous-section
+        document.getElementById("subsection1").addEventListener("click", function() {
+            displayProducts("subsection1");
+        });
+        document.getElementById("subsection2").addEventListener("click", function() {
+            displayProducts("subsection2");
+        });
+        document.getElementById("subsection3").addEventListener("click", function() {
+            displayProducts("subsection3");
+        });
+        document.getElementById("subsection4").addEventListener("click", function() {
+            displayProducts("subsection4");
+        });
+        document.getElementById("subsection5").addEventListener("click", function() {
+            displayProducts("subsection5");
+        });
     </script>
 </body>
 </html>
