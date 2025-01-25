@@ -12,7 +12,7 @@
         <img src="banner.jpg" alt="Bannière de mes créations" class="banner">
         <nav class="fixed-menu">
             <ul class="menu">
-                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#" id="home-link">Accueil</a></li>
                 <li><a href="#produits">Mes Créations</a></li>
                 <li><a href="#about">À propos/Évènements</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -82,6 +82,14 @@
 
         // Charger les produits au chargement de la page
         fetchProducts();
+
+        // Gestion du clic sur "Accueil"
+        document.getElementById("home-link").addEventListener("click", function (e) {
+            if (window.location.pathname === "/index.html" || window.location.pathname === "/") {
+                e.preventDefault(); // Empêche le rechargement de la page
+                window.scrollTo({ top: 0, behavior: "smooth" }); // Remonte en haut de la page
+            }
+        });
     </script>
 </body>
 </html>
