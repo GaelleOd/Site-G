@@ -25,27 +25,22 @@
         <section id="subsections" class="subsections">
             <h2>Mes Créations</h2>
             <div class="subsection-container">
-                <!-- Sous-section 1 -->
                 <div class="subsection" id="subsection1">
                     <img src="image1.jpg" alt="Sous-section 1">
                     <h3>Sous-section 1</h3>
                 </div>
-                <!-- Sous-section 2 -->
                 <div class="subsection" id="subsection2">
                     <img src="image2.jpg" alt="Sous-section 2">
                     <h3>Sous-section 2</h3>
                 </div>
-                <!-- Sous-section 3 -->
                 <div class="subsection" id="subsection3">
                     <img src="image3.jpg" alt="Sous-section 3">
                     <h3>Sous-section 3</h3>
                 </div>
-                <!-- Sous-section 4 -->
                 <div class="subsection" id="subsection4">
                     <img src="image4.jpg" alt="Sous-section 4">
                     <h3>Sous-section 4</h3>
                 </div>
-                <!-- Sous-section 5 -->
                 <div class="subsection" id="subsection5">
                     <img src="image5.jpg" alt="Sous-section 5">
                     <h3>Sous-section 5</h3>
@@ -53,20 +48,14 @@
             </div>
         </section>
 
-        <!-- Section pour afficher les produits -->
+        <!-- Section pour afficher les produits (elle est cachée) -->
         <section id="products-section" class="products-section">
-            <h2>Produits de la Sous-section</h2>
-            <!-- Les produits s'afficheront ici -->
+            <!-- Produits de la Sous-section seront chargés ici via JS -->
         </section>
     </main>
 
-    <!-- Footer spécifique à la section "Mes Créations" -->
-    <footer id="footer-creations">
-        <p>© 2025 Gaëlle & Amour. Tous droits réservés.</p>
-    </footer>
-
-    <!-- Footer avec texte à propos et événements, centré en bas de la page d'accueil -->
-    <footer id="footer-about" class="footer-about">
+    <!-- Bas de page : À propos et Événements -->
+    <footer id="footer-about">
         <div class="about-section">
             <h3>À propos</h3>
             <p>Bienvenue sur ma boutique de créations personnelles ! Chaque article est fabriqué avec soin et passion, à partir de tissu blanc délicatement brodé.</p>
@@ -78,28 +67,31 @@
                 <li>Marché artisanal : 20 mars 2025</li>
             </ul>
         </div>
+        <p>&copy; 2025 Gaëlle & Amour. Tous droits réservés.</p>
     </footer>
 
     <!-- Script pour récupérer et afficher les produits -->
     <script>
         const sheetURLs = [
-            "https://docs.google.com/spreadsheets/d/13J4SUfZdUHoedGH_CG5Me-HYfSMk724bKMDom0Y6rNA/gviz/tq?tqx=out:json", // Sous-section 1
-            "https://docs.google.com/spreadsheets/d/1vQ3XobNvDUthj_8EhAw1fvq9yo6sMTy19zhW01rZCC0/gviz/tq?tqx=out:json", // Sous-section 2
-            "https://docs.google.com/spreadsheets/d/1qVr3hAHNcYQQdd5juzRKwQrt7GB0CDRuzDl-68psKUw/gviz/tq?tqx=out:json", // Sous-section 3
-            "https://docs.google.com/spreadsheets/d/1KN266-Hx3NXt3QOss8KHY8c-51HY6Ip58GkbTkfhzxE/gviz/tq?tqx=out:json", // Sous-section 4
-            "https://docs.google.com/spreadsheets/d/1g259umj-IRj9dhWAgkqj0zOlsOoa0wbSRWtP2wQM2Oo/gviz/tq?tqx=out:json"  // Sous-section 5
+            "https://docs.google.com/spreadsheets/d/13J4SUfZdUHoedGH_CG5Me-HYfSMk724bKMDom0Y6rNA/gviz/tq?tqx=out:json",
+            "https://docs.google.com/spreadsheets/d/1vQ3XobNvDUthj_8EhAw1fvq9yo6sMTy19zhW01rZCC0/gviz/tq?tqx=out:json",
+            "https://docs.google.com/spreadsheets/d/1qVr3hAHNcYQQdd5juzRKwQrt7GB0CDRuzDl-68psKUw/gviz/tq?tqx=out:json",
+            "https://docs.google.com/spreadsheets/d/1KN266-Hx3NXt3QOss8KHY8c-51HY6Ip58GkbTkfhzxE/gviz/tq?tqx=out:json",
+            "https://docs.google.com/spreadsheets/d/1g259umj-IRj9dhWAgkqj0zOlsOoa0wbSRWtP2wQM2Oo/gviz/tq?tqx=out:json"
         ];
 
-        async function fetchProducts(sheetURL) {
+        // Fonction pour récupérer et afficher les produits depuis Google Sheets
+        async function fetchProducts(url) {
             const productsSection = document.getElementById("products-section");
             productsSection.innerHTML = ''; // Vider la section avant de la remplir avec les nouveaux produits
 
             try {
-                const response = await fetch(sheetURL);
+                const response = await fetch(url);
                 const data = await response.text();
                 const json = JSON.parse(data.substr(47).slice(0, -2)); // Extraction des données JSON
                 const rows = json.table.rows;
 
+                // Ajouter les produits à la section
                 if (rows.length === 0) {
                     productsSection.innerHTML = "<p>Aucun produit trouvé dans cette sous-section.</p>";
                 } else {
@@ -123,21 +115,10 @@
             }
         }
 
-        // Gestion de l'ouverture et fermeture des sous-sections
+        // Ajouter un gestionnaire de clic pour chaque sous-section
         document.querySelectorAll('.subsection').forEach((subsection, index) => {
-            subsection.addEventListener('click', () => {
-                const productsSection = document.getElementById("products-section");
-
-                if (productsSection.style.maxHeight) {
-                    // Si la section est déjà ouverte, la fermer
-                    productsSection.style.maxHeight = null;
-                    productsSection.classList.remove('open');
-                } else {
-                    // Ouvrir la section et charger les produits
-                    productsSection.style.maxHeight = productsSection.scrollHeight + "px";
-                    productsSection.classList.add('open');
-                    fetchProducts(sheetURLs[index]); // Charger les produits spécifiques à la sous-section
-                }
+            subsection.addEventListener("click", function() {
+                fetchProducts(sheetURLs[index]); // Charger les produits de la sous-section correspondante
             });
         });
     </script>
