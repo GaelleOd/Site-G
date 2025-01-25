@@ -7,10 +7,12 @@ body {
     color: #333;
     text-align: center;
     position: relative;
-    min-height: 100vh;
-    padding-bottom: 100px; /* Espace pour le footer */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Laisse la page s'étendre */
 }
 
+/* En-tête avec une image et un menu fixe */
 header {
     position: relative;
     background-color: #f8f8f8;
@@ -48,10 +50,6 @@ nav .menu li a {
     text-decoration: none;
     color: #333;
     font-weight: bold;
-}
-
-.products {
-    padding: 80px 20px; /* Ajouter un espace en haut pour éviter la superposition du menu fixe */
 }
 
 /* Sous-sections de la page Mes Créations */
@@ -139,9 +137,7 @@ nav .menu li a {
 
 /* Footer centré en bas */
 #footer-about {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    margin-top: auto; /* Le footer est maintenant toujours en bas */
     background-color: #f8f8f8;
     padding: 20px;
     text-align: center;
@@ -152,7 +148,12 @@ nav .menu li a {
     margin-bottom: 20px;
 }
 
-/* Réglage du footer dans le cas où la page n'est pas assez longue */
-body {
-    padding-bottom: 100px; /* Espace pour le footer */
+/* Pour le positionnement du footer dans tous les cas */
+footer p {
+    margin: 0;
+}
+
+/* Styles pour la section produit cachée */
+.products-section {
+    display: none;
 }
