@@ -89,17 +89,13 @@
         document.getElementById("subsection1").addEventListener("click", function() {
             const productsSection = document.getElementById("products-section");
 
-            // Si la section est déjà ouverte, on la referme
+            // Si la section est ouverte, on la ferme
             if (productsSection.classList.contains("open")) {
                 productsSection.classList.remove("open");
-                setTimeout(() => {
-                    productsSection.style.maxHeight = "0"; // Réduire la hauteur lors de la fermeture
-                }, 500); // Attendre la fin de la transition avant de réduire la hauteur
             } else {
-                // Sinon, on l'ouvre avec animation
+                // Ouvrir la section
+                fetchProducts(); // Charger les produits
                 productsSection.classList.add("open");
-                productsSection.style.maxHeight = "1000px"; // Augmenter la hauteur lors de l'ouverture
-                fetchProducts(); // Charger les produits quand la section s'ouvre
             }
         });
     </script>
