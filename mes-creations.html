@@ -25,6 +25,7 @@
         <section id="subsections" class="subsections">
             <h2>Mes Créations</h2>
             <div class="subsection-container">
+                <!-- Sous-section 1 avec un événement click -->
                 <div class="subsection" id="subsection1">
                     <img src="image1.jpg" alt="Sous-section 1">
                     <h3>Sous-section 1</h3>
@@ -84,8 +85,10 @@
             }
         }
 
-        // Appeler la fonction pour récupérer et afficher les produits dès que la page est chargée
-        window.onload = fetchProducts;
+        // Ajouter un gestionnaire de clic pour la sous-section 1
+        document.getElementById("subsection1").addEventListener("click", function() {
+            fetchProducts(); // Charger les produits lorsque la sous-section 1 est cliquée
+        });
     </script>
 </body>
 </html>
