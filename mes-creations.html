@@ -25,10 +25,15 @@
         <section id="subsections" class="subsections">
             <h2>Mes Créations</h2>
             <div class="subsection-container">
-                <div class="subsection">
-                    <img src="image1.jpg" alt="Sous-section 1">
+                <!-- Première sous-section avec une liste de produits -->
+                <div class="subsection" id="subsection1">
                     <h3>Sous-section 1</h3>
+                    <div id="subsection1-products" class="product-list">
+                        <!-- Les produits seront ajoutés ici par JavaScript -->
+                    </div>
                 </div>
+                
+                <!-- Autres sous-sections -->
                 <div class="subsection">
                     <img src="image2.jpg" alt="Sous-section 2">
                     <h3>Sous-section 2</h3>
@@ -54,14 +59,42 @@
         <p>© 2025 Gaëlle & Amour. Tous droits réservés.</p>
     </footer>
 
-    <!-- Script pour gérer le retour en haut pour le lien "Accueil" -->
+    <!-- Script pour charger les produits depuis Google Sheets -->
     <script>
-        document.getElementById("home-link").addEventListener("click", function (e) {
-            if (window.location.pathname === "/mes-creations.html") {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+        // Lien vers la feuille Google Sheets avec les produits à vendre dans la première sous-section
+        const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvtWdoC_e2UFChnySlHabXSnxpC8Qx_2FVMe0uLnc1emOAPxZ6dqJld3m9QBjGiSCe2XTd8ehUCU0v/gviz/tq?tqx=out:json";
+
+        // Fonction pour récupérer les produits à vendre dans la sous-section 1
+        async function fetchSubsection1Products() {
+            try {
+                const response = await fetch(sheetURL);
+                const data = await response.text();
+                const json = JSON.parse(data.substr(47).slice(0, -2));
+                const rows = json.table.rows;
+
+                const productList = document.getElementById("subsection1-products");
+                rows.forEach(row => {
+                    const [title, description, price, stock, image] = row.c;
+                    const productHTML = `
+                        <div class="product">
+                            <img src="${image?.v || 'default.jpg'}" alt="${title?.v || 'Produit'}">
+                            <h3>${title?.v || 'Titre inconnu'}</h3>
+                            <p>${description?.v || 'Description non disponible'}</p>
+                            <p><strong>Prix :</strong> ${price?.v || 'Non précisé'} €</p>
+                            <p><strong>Stock :</strong> ${stock?.v || 'Non spécifié'}</p>
+                        </div>
+                    `;
+                    productList.innerHTML += productHTML;
+                });
+            } catch (error) {
+                console.error("Erreur lors de la récupération des produits :", error);
+                document.getElementById("subsection1-products").innerHTML = 
+                    "<p>Erreur lors du chargement des produits. Veuillez réessayer plus tard.</p>";
             }
-        });
+        }
+
+        // Charger les produits au chargement de la page pour la première sous-section
+        fetchSubsection1Products();
     </script>
 </body>
 </html>
