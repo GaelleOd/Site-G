@@ -6,6 +6,7 @@
     <title>Gaëlle & Amour</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- En-tête avec une image et un menu fixe -->
     <header>
@@ -62,7 +63,7 @@
                 const productList = document.getElementById("product-list");
                 rows.forEach(row => {
                     const [title, description, price, stock, image] = row.c;
-                    const productHTML = `
+                    const productHTML = 
                         <div class="product">
                             <img src="${image?.v || 'default.jpg'}" alt="${title?.v || 'Produit'}">
                             <h3>${title?.v || 'Titre inconnu'}</h3>
@@ -70,7 +71,7 @@
                             <p><strong>Prix :</strong> ${price?.v || 'Non précisé'} €</p>
                             <p><strong>Stock :</strong> ${stock?.v || 'Non spécifié'}</p>
                         </div>
-                    `;
+                    ;
                     productList.innerHTML += productHTML;
                 });
             } catch (error) {
