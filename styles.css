@@ -1,4 +1,4 @@
-/* Définir la police et le style de base pour le corps */
+/* Styles généraux */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -8,7 +8,7 @@ body {
     text-align: center;
 }
 
-/* En-tête avec une image et un menu fixe */
+/* En-tête */
 header {
     position: relative;
     background-color: #f8f8f8;
@@ -20,6 +20,7 @@ header .banner {
     height: auto;
 }
 
+/* Menu fixe */
 nav.fixed-menu {
     position: fixed;
     top: 0;
@@ -48,7 +49,7 @@ nav .menu li a {
     font-weight: bold;
 }
 
-/* Sous-sections de la page Mes Créations */
+/* Section des sous-sections */
 .subsection-container {
     display: flex;
     justify-content: center;
@@ -85,21 +86,13 @@ nav .menu li a {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Section pour les produits, cachée au départ */
+/* Section des produits */
 .products-section {
-    max-height: 0; /* Initialement la section est fermée */
-    overflow: hidden; /* Empêche le débordement du contenu invisible */
-    transition: max-height 0.5s ease-out; /* Transition douce pour l'ouverture/fermeture */
-    padding: 0 20px; /* Padding latéral pour l'animation */
+    overflow: hidden;
+    transition: max-height 0.5s ease; /* Animation de déploiement */
+    max-height: 0; /* Par défaut, la hauteur est nulle (cachée) */
 }
 
-/* Lorsqu'on clique sur la sous-section, on ouvre la section des produits */
-.products-section.open {
-    max-height: 1000px; /* Hauteur suffisante pour afficher le contenu */
-    padding: 20px; /* Ajouter du padding à l'ouverture */
-}
-
-/* Mise en forme des produits affichés */
 .product-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 5 articles par ligne */
@@ -145,6 +138,7 @@ nav .menu li a {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Bas de page */
 footer {
     background-color: #f8f8f8;
     padding: 10px;
